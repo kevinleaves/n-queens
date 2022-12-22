@@ -141,10 +141,9 @@
           // if helper function evaluates to true, return true
           return true;
         }
-
       //otherwise false
-      return false; // fixme
       }
+      return false; // fixme
     },
 
 
