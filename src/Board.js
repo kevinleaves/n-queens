@@ -79,26 +79,71 @@
     //
     // test if a specific row on this board contains a conflict
     hasRowConflictAt: function(rowIndex) {
-      return false; // fixme
+      // create variable for count1s
+      let countOnes = 0;
+      // iterate over row array
+      let array = this.attributes[rowIndex];
+      for (let i = 0; i < array.length; i++) {
+        // if element is 1, increment count1s
+        if (array[i]) {
+          countOnes++;
+          // if count1s is greater than 1, return true
+          if (countOnes > 1) {return true;}
+        }
+      }
+
+      // otherwise return false
+      return false;
     },
 
     // test if any rows on this board contain conflicts
     hasAnyRowConflicts: function() {
-      return false; // fixme
+      // iterate through the object
+      for (var rowIndex = 0; rowIndex < this.attributes.n; rowIndex++) {
+        // call hasRowConflict with the key
+        // if invocation evaluates to true
+        if (this.hasRowConflictAt(rowIndex)) {
+          return true;
+        }
+      }
+      // return true;
+      return false;
     },
-
-
 
     // COLUMNS - run from top to bottom
     // --------------------------------------------------------------
     //
     // test if a specific column on this board contains a conflict
     hasColConflictAt: function(colIndex) {
-      return false; // fixme
+      // create variable for count
+      let counter = 0;
+      // iterate through n amount
+      for (let rowIndex = 0; rowIndex < this.attributes.n; rowIndex++) {
+        // if element at location = 1
+        if (this.attributes[rowIndex][colIndex]) {
+          counter++
+          // increment counter
+          if (counter > 1) {
+            // if counter is greater than 1
+            return true;
+          }
+        }
+      }
+
+      return false;
     },
 
     // test if any columns on this board contain conflicts
     hasAnyColConflicts: function() {
+      // iterate through all col indexes
+      for (let colIndex = 0; colIndex < this.attributes.n; colIndex++) {
+        // call helper function passing in new col indexes
+        if (this.hasColConflictAt(colIndex)) {
+          // if helper function evaluates to true, return true
+          return true;
+        }
+      }
+      //otherwise false
       return false; // fixme
     },
 
