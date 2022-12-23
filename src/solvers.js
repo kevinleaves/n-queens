@@ -103,7 +103,31 @@ window.findNQueensSolution = function(n) {
 
 // return the number of nxn chessboards that exist, with n queens placed such that none of them can attack each other
 window.countNQueensSolutions = function(n) {
-  var solutionCount = undefined; //fixme
+  // create board instance
+  let board = new Board({n: n})
+  var solutionCount = 0;
+
+  // helper function recurses and iterates
+  let recurse = (row) => {
+    // base case to increment solution count, if row equal to n, increment + return out of that call
+    if (row === n) {
+      solutionCount++
+      return
+    }
+    // iterate over columns
+    for (let col = 0; col < n; col++) {
+      // toggle current cell
+      board.togglePiece(row, col);
+      // if board is valid,
+      if (!board.hasAnyQueensConflicts()) recurse(row + 1);
+      // recurse, pass in the next row
+      //else if board not valid
+      //toggle board back to 0;
+      board.togglePiece(row, col);
+    }
+  }
+
+  recurse(0)
 
   console.log('Number of solutions for ' + n + ' queens:', solutionCount);
   return solutionCount;
