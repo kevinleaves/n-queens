@@ -79,6 +79,7 @@
     //
     // test if a specific row on this board contains a conflict
     hasRowConflictAt: function(rowIndex) {
+      //else return false;
       // create variable for count1s
       let countOnes = 0;
       // iterate over row array
@@ -99,6 +100,7 @@
     // test if any rows on this board contain conflicts
     hasAnyRowConflicts: function() {
       // iterate through the object
+
       for (var rowIndex = 0; rowIndex < this.attributes.n; rowIndex++) {
         // call hasRowConflict with the key
         // if invocation evaluates to true
@@ -143,10 +145,14 @@
         }
       //otherwise false
       }
-      return false; // fixme
+      // loop through columns and pass current column into hasColConflictAt
+      for (var colIndex = 0; colIndex < this.attributes.n; colIndex++) {
+        if (this.hasColConflictAt(colIndex) === true) {
+          return true;
+        }
+      }
+      return false;
     },
-
-
 
     // Major Diagonals - go from top-left to bottom-right
     // --------------------------------------------------------------
