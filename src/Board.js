@@ -159,11 +159,57 @@
     //
     // test if a specific major diagonal on this board contains a conflict
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
-      return false; // fixme
+      // initialize the counter
+      let counter = 0;
+      let row, col
+      // if majorDiagonalColumnIndexAtFirstRow is less than 0
+      if (majorDiagonalColumnIndexAtFirstRow < 0) {
+        // row index is equal to the absolute value of majorDiagonalColumnIndexAtFirstRow
+        row = Math.abs(majorDiagonalColumnIndexAtFirstRow)
+        // col index is equal to 0
+        col = 0;
+      } else {
+        // col index is equal to majorDiagonalColumnIndexAtFirstRow
+        col = majorDiagonalColumnIndexAtFirstRow;
+        // row index is equal to 0
+        row = 0;
+      }
+
+      var n = this.attributes.n;
+      // while index is less than n
+      while (row < n && col < n) {
+        // if the value of matrix[row][col] is 1
+        if (this.attributes[row][col] === 1) {
+          // increment the counter
+          counter++
+          // if counter is greater than 1
+          if (counter > 1) {
+            // return true
+            return true;
+          }
+        }
+        // increment row and col
+        row++
+        col++
+      }
+
+      return false;
     },
 
     // test if any major diagonals on this board contain conflicts
     hasAnyMajorDiagonalConflicts: function() {
+      // set a variable to negative value of n + 1
+      let n = this.attributes.n;
+      var currentDiagonal = (-n) + 1
+      // while variable is not equal to n
+      while (currentDiagonal !== n) {
+        // invoke the helper function with variable value
+        if (this.hasMajorDiagonalConflictAt(currentDiagonal)) {
+          return true;
+        }
+        // increment the value
+        currentDiagonal++
+      }
       return false; // fixme
     },
 
@@ -174,11 +220,57 @@
     //
     // test if a specific minor diagonal on this board contains a conflict
     hasMinorDiagonalConflictAt: function(minorDiagonalColumnIndexAtFirstRow) {
+    // find starting point
+    let row, col;
+    let n = this.attributes.n;
+    // if minorDiagonalColumnIndexAtFirstRow is less than n
+    if (minorDiagonalColumnIndexAtFirstRow < n) {
+      // row is 0 and col is equal to minorDiagonalColumnIndexAtFirstRow
+      row = 0
+      col = minorDiagonalColumnIndexAtFirstRow;
+    }
+
+    // if minorDiagonalColumnIndexAtFirstRow is greater than or equal to n
+    if (minorDiagonalColumnIndexAtFirstRow >= n) {
+      // row is minorDiagonalColumnIndexAtFirstRow - n + 1
+      row = minorDiagonalColumnIndexAtFirstRow - n + 1;
+      // col is n - 1
+      col = n - 1;
+    }
+
+    let counter = 0;
+    // while col greater or equal to 0 and row is less than n
+    while (col >= 0 && row < n) {
+
+      // if 1 exist
+      if (this.attributes[row][col] === 1) {
+        // increment counter
+        counter++;
+        // if counter is greater than 1
+        if (counter > 1) {
+          // return true;
+          return true;
+        }
+      }
+      // increment row decrement col
+      row++
+      col--;
+    }
+
       return false; // fixme
     },
 
     // test if any minor diagonals on this board contain conflicts
     hasAnyMinorDiagonalConflicts: function() {
+      // 0 to 2(n - 1)
+      let currentDiagonal = 0;
+      while(currentDiagonal <= 2 * (this.attributes.n -1)) {
+        if (this.hasMinorDiagonalConflictAt(currentDiagonal)) {
+          return true;
+        }
+        currentDiagonal++;
+      }
+
       return false; // fixme
     }
 
